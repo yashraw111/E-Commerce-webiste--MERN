@@ -22,54 +22,36 @@ const AddCategory = () => {
   const dispatch = useDispatch()
 
 
-  // const {CateList}= useSelector((state)=>state.Category)
-  // useEffect(() => {
-  //   dispatch(ViewCateList())
-  // }, [dispatch]);
-
-
+  const {CateList}= useSelector((state)=>state.Category)
+  useEffect(() => {
+    dispatch(ViewCateList())
+  }, [dispatch]);
 
   async function AddCategory(data) {
-    try {
-      dispatch(CreateCate(data))
-       toast.success('Category added successfully!', {
+
+    const isCategoryExists = CateList.some((cat) => cat.cat_name.toLowerCase() === data.cat_name.toLowerCase());
+    if (isCategoryExists) {
+      toast.error('Category already exists!', {
         position: 'top-center',
         autoClose: 3000,
       });
+      reset()
+      return;
+    }
+    try {
+      dispatch(CreateCate(data))
+      toast.success('Category added successfully!', {
+        position: 'top-center',
+        autoClose: 3000,
+      });
+      reset(); 
+      Show();
     } catch (error) {
-      console.log(error)
-
-      
+      console.error("Error adding category:", error);
     }
 
 
-    // const isCategoryExists = CateList.some((cat) => cat.category.toLowerCase() === data.category.toLowerCase());
-    // if (isCategoryExists) {
-    //   toast.error('Category already exists!', {
-    //     position: 'top-center',
-    //     autoClose: 3000,
-    //   });
-    //   reset()
-    //   return;
-    // }
-    // try {
-    //   dispatch(CreateCate(data))
-    //   toast.success('Category added successfully!', {
-    //     position: 'top-center',
-    //     autoClose: 3000,
-    //   });
-    //   reset(); 
-    //   Show();
-    // } catch (error) {
-    //   console.error("Error adding category:", error);
-    // }
   }
-
-
-  // async function AddCategory(data){
-  //   const res = await axios.post(`${import.meta.env.VITE_BASE_URL_CAT}/addCategory`,data)
-  //   console.log(res.data)
-  // }
 
   return (
     <>

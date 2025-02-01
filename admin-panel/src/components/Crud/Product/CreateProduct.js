@@ -27,6 +27,7 @@ const CreateProduct = () => {
   } = useForm()
   const dispatch = useDispatch()
   const {CateList}= useSelector((state)=>state.Category)
+  console.log(CateList)
 
   useEffect(() => {
     dispatch(ViewCateList())
@@ -42,17 +43,16 @@ const CreateProduct = () => {
           'https://api.cloudinary.com/v1_1/dd8jcqy60/image/upload',
           formData
         );
-        console.log(cloudinaryResponse.data);
+        // console.log(cloudinaryResponse.data);
         const payload = {
           // id: Date.now(),
-          productName: data.name,
-          category: data.CateGory,
-          productPrice: data.price,
-          productDescription: data.des,
-          url: cloudinaryResponse.data.secure_url,
+          productName: data.productName,
+          CateGory: data.CateGory,
+          productPrice: data.productPrice,
+          productImage: cloudinaryResponse.data.secure_url,
         };
-  
         dispatch(Createpr(payload))
+        // console.log(payload)
         reset();
       } catch (error) {
         console.error('Error uploading image:', error);
@@ -72,7 +72,7 @@ const CreateProduct = () => {
                 {CateList.map((ele) => {
                   return (
                     <>
-                      <option value={ele.category}>{ele.category}</option>
+                      <option value={ele.cat_name}>{ele.cat_name}</option>
                     </>
                   )
                 })}
@@ -82,7 +82,7 @@ const CreateProduct = () => {
                 size="sm"
                 className="mt-3"
                 placeholder="Enter  Product Name"
-                {...register('name', { required: 'Product name is required' })}
+                {...register('productName', { required: 'Product name is required' })}
               />
               {errors.name && <p className="text-danger">{errors.name.message}</p>}
               <br />
@@ -90,17 +90,11 @@ const CreateProduct = () => {
                 type="number"
                 size="sm"
                 placeholder="Enter  Product Price"
-                {...register('price', { required: 'Price is required' })}
+                {...register('productPrice', { required: 'Price is required' })}
               />
               {errors.price && <p className="text-danger">{errors.price.message}</p>}
               <br />
-              <CFormTextarea
-                size="sm"
-                placeholder="Enter  Product Description"
-                {...register('des', { required: 'Description is required' })}
-              />
-              {errors.des && <p className="text-danger">{errors.des.message}</p>}
-              <br />
+              
               <CFormInput type='file' {...register("image", { required: "Image is required" })}  />
               <CButton type="submit" className="btn btn-success text-center mt-2">
                 Submit

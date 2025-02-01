@@ -3,11 +3,11 @@ const Category = require('../model/Category.model')
 const CreateCategory = async(req,res)=>{
     try {
         const {cat_name}= req.body
-        const res = await Category.create({cat_name})
+        const ans = await Category.create({cat_name})
         console.log(res)
         res.json({
             message: "Category created successfully",
-            data: res
+            data: ans
         })
         
     } catch (error) {
@@ -37,9 +37,16 @@ const trashCat = async(req,res)=>{
     })
     
 }
+const updateCat= async(req,res)=>{
+    const {id}= req.params
+
+    console.log(id)
+    // const {cat_name}=req.body
+}
 
 module.exports = {
     CreateCategory,
     findCategory,
-    trashCat
+    trashCat,
+    updateCat
 }

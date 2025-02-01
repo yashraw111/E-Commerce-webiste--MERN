@@ -25,16 +25,13 @@ const UpdateProject = () => {
     handleSubmit,
     formState: { errors },
     reset,
-    setValue,
   } = useForm()
-
   const { ProductList } = useSelector((state) => state.product)
-
   const { CateList } = useSelector((state) => state.Category)
   const singleProduct = ProductList.find((ele) => {
-    return ele.id == id
+    return ele._id == id
   })
-
+  
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(ViewList())
@@ -44,12 +41,10 @@ const UpdateProject = () => {
   const redirect = useNavigate()
   const Update = async (data) => {
     try {
-
-      let imageUrl = singleProduct.url; 
-
-    if (data.url.length == 1) {
+      let imageUrl = singleProduct.productImage;
+    if (data.productImage.length == 1) {
       const formData = new FormData();
-      formData.append('file', data.url[0]);
+      formData.append('file', data.productImage[0]);
       formData.append('upload_preset', 'project');
       formData.append('cloud_name', 'dd8jcqy60');
 
@@ -62,12 +57,11 @@ const UpdateProject = () => {
     }
 
       const payload = {
-        id: singleProduct.id,
+        id: singleProduct._id,
         productName: data.productName,
-        category: data.category,
+        CateGory: data.CateGory,
         productPrice: data.productPrice,
-        productDescription: data.productDescription,
-        url: imageUrl , 
+        productImage: imageUrl , 
       }
       
       dispatch(UpdateProduct(payload))
@@ -85,16 +79,16 @@ const UpdateProject = () => {
           <CCard className="mb-4">
             <CForm className="form shadow text-center" onSubmit={handleSubmit(Update)}>
               <CCardHeader className="text-start">
-                <strong className="fs-2">Create Product</strong>
+                <strong className="fs-2">Update Product</strong>
               </CCardHeader>
               <CCardBody>
                 {/* <br></br> */}
-                <CFormSelect aria-label="Default select example" {...register('category')}>
+                <CFormSelect aria-label="Default select example" {...register('CateGory')}>
                   <option>Open this select menu</option>
                   {CateList.map((ele) => {
                     return (
                       <>
-                        <option value={ele.category}>{ele.category}</option>
+                        <option value={ele.cat_name}>{ele.cat_name}</option>
                       </>
                     )
                   })}
@@ -117,14 +111,14 @@ const UpdateProject = () => {
                 />
                 {errors.price && <p className="text-danger">{errors.price.message}</p>}
                 <br />
-                <CFormTextarea
+                {/* <CFormTextarea
                   size="lg"
                   placeholder="Enter  Product Description"
                   {...register('productDescription', { required: 'Description is required' })}
                 />
                 {errors.des && <p className="text-danger">{errors.des.message}</p>}
-                <br />
-                <CFormInput  type="file" {...register('url')} />
+                <br /> */}
+                <CFormInput  type="file" {...register('productImage')} />
 
                 <CButton type="submit" className="btn btn-success text-center mt-2">
                   Submit

@@ -8,9 +8,11 @@ app.use(express.urlencoded({ extended: true}))
 
 const cors = require('cors')
 app.use(cors())
-
 const CategoryRoutes = require('./routes/Category.routes')
+const productRoutes = require('./routes/product.routes')
+
 app.use('/category',CategoryRoutes)
+app.use('/product',productRoutes)
 app.listen(PORT,()=>{
     console.log(`Server running on port http://localhost:${PORT}`)
 })

@@ -7,27 +7,23 @@ const initialState ={
 }
 export const Createpr = createAsyncThunk("product/Createpr",async(data)=>{
     console.log("dtat",data);
-    const res = await axios.post(`${import.meta.env.VITE_BASE_URL}/product`,data)
-    return res.data
+    const res = await axios.post(`${import.meta.env.VITE_BASE_URL_PRO}/createPr`,data)
+    // return res.data
 })
 export const Deletepr = createAsyncThunk('product/Deletepr',async(id)=>{
-   const res =  axios.delete(`${import.meta.env.VITE_BASE_URL}/product/${id}`)
-    // alert(ProductId)
+
+    // console.log(id)
+   const res =  axios.delete(`${import.meta.env.VITE_BASE_URL_PRO}/deleteProduct/${id}`)
     return id
 
 })
 export const ViewList = createAsyncThunk('product/ViewList',async()=>{
-    const res = await axios.get(`${import.meta.env.VITE_BASE_URL}/product`)
+    const res = await axios.get(`${import.meta.env.VITE_BASE_URL_PRO}/viewProduct`)
     return res.data
 })
 export const UpdateProduct = createAsyncThunk('product/UpdateProduct',async(data)=>{
-    // console.log("Slice",data);
-    
     const {id} = data
-    console.log(id);
-    
-    await axios.put(`${import.meta.env.VITE_BASE_URL}/product/${id}`,data)
-
+    await axios.put(`${import.meta.env.VITE_BASE_URL_PRO}/updateProduct/${id}`,data)
     return data
 })
 const UserSlice = createSlice({
@@ -46,7 +42,7 @@ const UserSlice = createSlice({
             const id = action.payload
 
             const filterData = state.ProductList.filter((ele)=>{
-                return ele.id != id
+                return ele._id != id
             })
             state.ProductList = filterData
         })
@@ -54,7 +50,7 @@ const UserSlice = createSlice({
             const {id} = action.payload
 
             const Index_num = state.ProductList.findIndex((ele)=>{
-                return ele.id == id
+                return ele._id == id
             })
 
             if(Index_num != -1){

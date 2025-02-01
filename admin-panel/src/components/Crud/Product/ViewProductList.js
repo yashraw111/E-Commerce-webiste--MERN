@@ -19,21 +19,6 @@ const ViewProductList = () => {
     return ele.CateGory
 })
 
-const uniqueCate = new Set(CateList);
-const finalCate = [...uniqueCate]
-  // const filterdata = ProductList
-  // .filter((ele)=>{
-  //    const Searched = Search.toUpperCase()
-  //    const Category = ele.name.toUpperCase()
-
-  //    return  Category.includes(Searched)
-
-  // })
-  // .filter((ele)=>{
-  //   return ele.CateGory.includes(cate)
-  // })
-  // console.log(filterdata);
-  
   useEffect(() => {
     dispatch(ViewList())
     dispatch(ViewCateList())
@@ -68,28 +53,7 @@ const finalCate = [...uniqueCate]
         <CRow>
           <CCol xs={12}>
       <h1>ViewList</h1>
-      {/* <CRow className='mb-3'>
-        <CCol xs={4}>
-      <CFormInput onChange={(e)=>SetSearch(e.target.value)} className='form-control' placeholder='enter username'></CFormInput>
-       <CFormSelect aria-label="Default select example" onChange={(e)=>SetCate(e.target.value)} >
-                      <option value="">Open this select menu</option>
-                      {finalCate.map((ele) => {
-                        return (
-                          <>
-                            <option value={ele}>{ele}</option>
-                          </>
-                        )
-                      })}
-                    </CFormSelect>
-
-      </CCol>
-        <CCol xs={4}>
-      <CFormInput onChange={(e)=>SetSearch(e.target.value)} className='form-control' placeholder='enter username'></CFormInput>
-      </CCol>
-        <CCol xs={4}>
-      <CFormInput onChange={(e)=>SetSearch(e.target.value)} className='form-control' placeholder='enter username'></CFormInput>
-      </CCol> */}
-      {/* </CRow> */}
+      
       <CTable className="table table-bordered ">
         <CTableRow className="">
           <CTableDataCell scope="col">SNO</CTableDataCell>
@@ -107,21 +71,21 @@ const finalCate = [...uniqueCate]
                 <>
                   <CTableRow className=''>
                     <CTableDataCell>{index + 1}</CTableDataCell>
-                    <CTableDataCell>{ele.category}</CTableDataCell>
+                    <CTableDataCell>{ele.CateGory}</CTableDataCell>
                     <CTableDataCell>{ele.productName}</CTableDataCell>
                     <CTableDataCell>{ele.productPrice}</CTableDataCell>
-                    <CTableDataCell><img  width={100} src={ele.url} alt="" /></CTableDataCell>
+                    <CTableDataCell><img  width={100} src={ele.productImage} alt="" /></CTableDataCell>
                     {/* <CTableDataCell>{ele.des}</CTableDataCell> */}
                     <CTableDataCell>
                       <CButton
                         className="btn btn-danger"
                         onClick={() => {
-                          trash(ele.id)
+                          trash(ele._id)
                         }}
                       >
                         <i class="fa-solid fa-trash"></i>
                       </CButton>
-                      <NavLink to={`/UpdateProduct/${ele.id}`}  className='ms-2 btn btn-success' ><i class="fa-solid fa-pen-to-square"></i></NavLink>
+                      <NavLink to={`/UpdateProduct/${ele._id}`}  className='ms-2 btn btn-success' ><i class="fa-solid fa-pen-to-square"></i></NavLink>
                     </CTableDataCell>
                   </CTableRow>
                 </>

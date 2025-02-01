@@ -29,27 +29,26 @@ const CreateProduct = () => {
   const dispatch = useDispatch()
   const {CateList}= useSelector((state)=>state.Category)
   
-
-
+  
   useEffect(() => {
     dispatch(ViewCateList())
   }, [dispatch])
-  const convertToBase64 = (file) =>
-    new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result);
-      reader.onerror = (error) => reject(error);
-    });
+  // const convertToBase64 = (file) =>
+  //   new Promise((resolve, reject) => {
+  //     const reader = new FileReader();
+  //     reader.readAsDataURL(file);
+  //     reader.onload = () => resolve(reader.result);
+  //     reader.onerror = (error) => reject(error);
+  //   });
   async function regist(data) {
-    const base64Image = await convertToBase64(data.image[0]);
-    const payload = {
-      productName: data.name,
-      category: data.CateGory,
-      productPrice: data.price,
-      productDescription: data.des,
-      image: base64Image,
-    };
+    // const base64Image = await convertToBase64(data.image[0]);
+    // const payload = {
+    //   productName: data.name,
+    //   category: data.CateGory,
+    //   productPrice: data.price,
+    //   productDescription: data.des,
+    //   image: base64Image,
+    // };
     try {
       
       alert("Data submitted successfully!");
@@ -70,9 +69,10 @@ const CreateProduct = () => {
               <CFormSelect  aria-label="Default select example" {...register('CateGory')}>
                 <option>Open this select menu</option>
                 {CateList.map((ele) => {
+                  console.log(ele)
                   return (
                     <>
-                      <option value={ele.category}>{ele.category}</option>
+                      <option value={ele.cat_name}>{ele.cat_name}</option>
                     </>
                   )
                 })}

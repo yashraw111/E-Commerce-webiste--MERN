@@ -66,7 +66,7 @@ const ViewCategory = () => {
                       >
                         <i class="fa-solid fa-trash"></i>
                       </CButton>
-                      <NavLink to={`/UpdateCategory/${ele.id}`} className="ms-2 btn btn-success">
+                      <NavLink to={`/UpdateCategory/${ele._id}`} className="ms-2 btn btn-success">
                         <i class="fa-solid fa-pen-to-square"></i>
                       </NavLink>
                     </CTableDataCell>
