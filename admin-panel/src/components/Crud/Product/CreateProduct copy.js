@@ -33,22 +33,9 @@ const CreateProduct = () => {
   useEffect(() => {
     dispatch(ViewCateList())
   }, [dispatch])
-  // const convertToBase64 = (file) =>
-  //   new Promise((resolve, reject) => {
-  //     const reader = new FileReader();
-  //     reader.readAsDataURL(file);
-  //     reader.onload = () => resolve(reader.result);
-  //     reader.onerror = (error) => reject(error);
-  //   });
+
   async function regist(data) {
-    // const base64Image = await convertToBase64(data.image[0]);
-    // const payload = {
-    //   productName: data.name,
-    //   category: data.CateGory,
-    //   productPrice: data.price,
-    //   productDescription: data.des,
-    //   image: base64Image,
-    // };
+ 
     try {
       
       alert("Data submitted successfully!");

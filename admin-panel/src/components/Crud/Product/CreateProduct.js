@@ -43,7 +43,6 @@ const CreateProduct = () => {
           'https://api.cloudinary.com/v1_1/dd8jcqy60/image/upload',
           formData
         );
-        // console.log(cloudinaryResponse.data);
         const payload = {
           // id: Date.now(),
           productName: data.productName,
