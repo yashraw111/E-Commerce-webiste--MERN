@@ -8,7 +8,6 @@ import AllProduct from './AllProduct'
 const Products = () => {
   return (
     <>
-    <>
     <div class="product-box">
     <div class="product-minimal">
         <NewArrivals/>
@@ -16,11 +15,9 @@ const Products = () => {
         <TopRated/>
         <DealOfTheDay/>
         <AllProduct/>
-
 </div>
 
     </div>
-    </>
     
     </>
   )

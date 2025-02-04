@@ -7,17 +7,10 @@ import { NavLink } from 'react-router-dom'
 import { ViewCateList } from '../CategorySlice'
 import Swal from 'sweetalert2'
 const ViewProductList = () => {
-  const[Search,SetSearch]=useState("")
-  const[cate,SetCate]=useState("")
-  // console.log(Search);
 
   const{ProductList} = useSelector((state)=>state.product)
   const dispatch = useDispatch()
-  // console.log(ProductList);
 
-  const CateList = ProductList.map((ele) => {
-    return ele.CateGory
-})
 
   useEffect(() => {
     dispatch(ViewList())

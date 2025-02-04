@@ -22,8 +22,8 @@ export const ViewList = createAsyncThunk('product/ViewList',async()=>{
     return res.data
 })
 export const UpdateProduct = createAsyncThunk('product/UpdateProduct',async(data)=>{
-    const {id} = data
-    await axios.put(`${import.meta.env.VITE_BASE_URL_PRO}/updateProduct/${id}`,data)
+    const {_id} = data
+    await axios.put(`${import.meta.env.VITE_BASE_URL_PRO}/updateProduct/${_id}`,data)
     return data
 })
 const UserSlice = createSlice({
@@ -47,10 +47,10 @@ const UserSlice = createSlice({
             state.ProductList = filterData
         })
         .addCase(UpdateProduct.fulfilled,(state,action)=>{
-            const {id} = action.payload
+            const {_id} = action.payload
 
             const Index_num = state.ProductList.findIndex((ele)=>{
-                return ele._id == id
+                return ele._id == _id
             })
 
             if(Index_num != -1){

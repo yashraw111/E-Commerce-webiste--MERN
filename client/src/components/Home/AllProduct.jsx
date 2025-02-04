@@ -1,47 +1,71 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { NavLink } from "react-router-dom";
 
 const AllProduct = () => {
+
+  const [product, setProduct] = useState([])
+  async function AllProduct() {
+    const res = await axios.get(`http://localhost:8000/product/viewProduct`)
+    setProduct(res.data)
+  }
+  console.log(product)
+  console.log(product)
+  useEffect(()=>{
+    AllProduct()
+  },[])
   return (
     <>
-      <div class="product-main">
-        <h2 class="title">New Products</h2>
+     <div className="product-main">
+      <h2 className="section-title mb-40">All Products</h2>
+      <br /><br />
+      <div className="product-grid">
+       {
+        product.map((product, index) => (
+          <div className="showcase flex flex-col">
+          <div className="showcase-banner">
+              <img src={product.productImage} alt="Mens Winter Leathers Jackets" className="product-img default w-full h-full" width="100%"/>
+              <img src={product.productImage} alt="Mens Winter Leathers Jackets" className="product-img hover w-full" width="100%"/>
+              <p className="showcase-badge">15%</p>
+              <div className="showcase-actions">
+                  <button className="btn-action"> <a href="#"><ion-icon name="heart-outline"></ion-icon></a> </button>
+                  <button className="btn-action"> <NavLink to={`moreProduct/${product._id}`}>  <ion-icon name="eye-outline"></ion-icon></NavLink></button>
+                  <button className="btn-action"> <a href="#"><ion-icon name="repeat-outline"></ion-icon></a> </button>
+                  <button className="btn-action"><a href="#"><ion-icon name="bag-add-outline"></ion-icon></a></button>
+              </div>
+          </div>
 
-        <div class="product-grid">
-        <div class="showcase">
-                                <div class="showcase-banner">
-                                    <img src="https://i.postimg.cc/jdybNKWJ/jacket-3.jpg" alt="Mens Winter Leathers Jackets" class="product-img default" width="300"/>
-                                    <img src="https://i.postimg.cc/pr9cj4HT/jacket-4.jpg" alt="Mens Winter Leathers Jackets" class="product-img hover" width="300"/>
+          <div className="showcase-content">
+              <a href="#" className="showcase-category">{product.CateGory}</a>
+              <a href="#"><h3 className="showcase-title">{product.productName}</h3></a>
+          
 
-                                    <p class="showcase-badge">15%</p>
+<div className="showcase-rating">
+  {
+    Array(product.rate).fill(0).map((_, i) => (
+      <ion-icon key={i} name="star"></ion-icon>
+    ))
+  }
+  {
+    Array(5 - product.rate).fill(0).map((_, i) => (
+      <ion-icon key={i + product.rate} name="star-outline"></ion-icon>
+    ))
+  }
+</div>
 
-                                    <div class="showcase-actions">
-                                        <button class="btn-action"><ion-icon name="heart-outline"></ion-icon></button>
-                                        <button class="btn-action"><ion-icon name="eye-outline"></ion-icon></button>
-                                        <button class="btn-action"><ion-icon name="repeat-outline"></ion-icon></button>
-                                        <button class="btn-action"><ion-icon name="bag-add-outline"></ion-icon></button>
-                                    </div>
-                                </div>
-
-                                <div class="showcase-content">
-                                    <a href="#" class="showcase-category">Jacket</a>
-                                    <a href="#"><h3 class="showcase-title">Mens Winter Leathers Jackets</h3></a>
-
-                                    <div class="showcase-rating">
-                                        <ion-icon name="star"></ion-icon>
-                                        <ion-icon name="star"></ion-icon>
-                                        <ion-icon name="star"></ion-icon>
-                                        <ion-icon name="star-outline"></ion-icon>
-                                        <ion-icon name="star-outline"></ion-icon>
-                                    </div>
-
-                                    <div class="price-box">
-                                        <p class="price">48.00</p>
-                                        <del>$75.00</del>
-                                    </div>
-                                </div>
-                            </div>
-        </div>
+              <div className="price-box">
+                  <p className="price">${product.productPrice}</p>
+                  <del>${product.WithoutDiscountPrice}</del>
+              </div>
+          </div>
       </div>
+
+        
+            ))
+       }
+      </div>
+      </div>
+
     </>
   );
 };

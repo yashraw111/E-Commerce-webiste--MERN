@@ -5,23 +5,18 @@ import { useEffect } from 'react'
 import { BrowserRouter as Router,Routes,Route } from 'react-router-dom'
 import Header from './pages/Header'
 import Home from './pages/Home'
-import Footer from './pages/footer'
+import LoginPage from './components/Auth/LoginPage'
+import MoreProduct from './components/common/MoreProduct'
 function App() {
-  async function show() {
-    const res = await axios.get(`http://localhost:8000/product/viewProduct`)
-    console.log(res)
-  }
-  useEffect(()=>{
-    show()
-  },[])
+ 
   return (
     <>
     <Router>
-      <Header/>
       <Routes>
+        {/* <Route path="/" element={<LoginPage />} /> */}
         <Route path="/" element={<Home />} />
+        <Route path="/moreProduct/:id" element={<MoreProduct />} />
       </Routes>
-      <Footer/>
     </Router>
  
     </>

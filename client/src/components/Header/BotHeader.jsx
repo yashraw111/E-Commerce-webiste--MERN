@@ -5,7 +5,7 @@ const BotHeader = () => {
     <>
        <div class="header-main">
             <div class="container">
-                <a href="#" class="header-logo"><img src="https://i.postimg.cc/XYYNC3X8/logo.png" alt="logo" width="120" height="36"/></a>
+                <a href="/" class="header-logo"><img src="https://i.postimg.cc/XYYNC3X8/logo.png" alt="logo" width="120" height="36"/></a>
 
                 <div class="header-search-container">
                     <input type="search" name="search" class="search-field" placeholder="Enter your product name"/>

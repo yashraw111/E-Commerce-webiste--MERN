@@ -10,7 +10,6 @@ const HomeMain = () => {
        <div class="container">
         <SideBar/>
         <Products/>
-
        </div>
        </div>
     
