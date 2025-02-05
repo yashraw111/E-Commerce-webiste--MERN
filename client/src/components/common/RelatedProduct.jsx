@@ -44,10 +44,7 @@ const RelatedProduct = () => {
                     </button>
                     <button className="btn-action">
                       {" "}
-                      <NavLink to={`moreProduct/${product._id}`}>
-                        {" "}
                         <ion-icon name="eye-outline"></ion-icon>
-                      </NavLink>
                     </button>
                     <button className="btn-action">
                       {" "}

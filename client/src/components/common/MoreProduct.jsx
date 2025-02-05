@@ -35,8 +35,7 @@ const MoreProduct = () => {
 
               <div class="showcase-content">
                 <div className="showcase-rating">
-                 
-                  {Array(singleProduct?.rate)
+                  {/* {Array(singleProduct?.rate)
                     .fill(0)
                     .map((_, i) => (
                       <ion-icon key={i} name="star"></ion-icon>
@@ -48,18 +47,19 @@ const MoreProduct = () => {
                         key={i + singleProduct?.rate}
                         name="star-outline"
                       ></ion-icon>
-                    ))}
+                    ))} */}
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+
+                  <ion-icon name="star-outline"></ion-icon>
                 </div>
 
                 <a href="#">
-                  <h3 class="showcase-title">
-                   {singleProduct?.productName}
-                  </h3>
+                  <h3 class="showcase-title">{singleProduct?.productName}</h3>
                 </a>
-                <p class="showcase-desc">
-                {singleProduct?.description}
-                 
-                </p>
+                <p class="showcase-desc">{singleProduct?.description}</p>
 
                 <div class="price-box">
                   <p class="price">{singleProduct?.productPrice}</p>
@@ -111,7 +111,7 @@ const MoreProduct = () => {
           </div>
         </div>
       </div>
-      <RelatedProduct/>
+      <RelatedProduct />
       <Footer />
     </>
   );
