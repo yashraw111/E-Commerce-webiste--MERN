@@ -17,6 +17,7 @@ import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
 import { Createpr } from '../UserSlice'
 import { ViewCateList } from '../CategorySlice'
+import { toast, ToastContainer } from 'react-toastify'
 
 const CreateProduct = () => {
   const { register, handleSubmit, formState: { errors }, reset } = useForm({ mode: 'onTouched' }) // Validate on touch
@@ -53,6 +54,10 @@ const CreateProduct = () => {
       }
 
       dispatch(Createpr(payload))
+       toast.success('Category added successfully!', {
+              position: 'top-center',
+              autoClose: 3000,
+            });
       reset()
     } catch (error) {
       console.error('Error uploading image:', error)
@@ -60,6 +65,7 @@ const CreateProduct = () => {
   }
 
   return (
+    <>
     <CRow className="justify-content-center">
       <CCol xs={12} md={8} lg={6}>
         <CCard className="mb-4 shadow-lg">
@@ -140,7 +146,10 @@ const CreateProduct = () => {
           </CCardBody>
         </CCard>
       </CCol>
+
     </CRow>
+    <ToastContainer />
+    </>
   )
 }
 

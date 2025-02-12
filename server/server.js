@@ -10,11 +10,13 @@ const cors = require('cors')
 app.use(cors())
 const CategoryRoutes = require('./routes/Category.routes')
 const productRoutes = require('./routes/product.routes')
+const SubCatController = require('./routes/subCategory.routes')
 const User = require('./routes/user.routes')
 
 app.use('/category',CategoryRoutes)
 app.use('/product',productRoutes)
 app.use('/api/user',User)
+app.use('/api/subcat',SubCatController)
 app.listen(PORT,()=>{
     console.log(`Server running on port http://localhost:${PORT}`)
 })

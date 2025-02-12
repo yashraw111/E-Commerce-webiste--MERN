@@ -75,6 +75,32 @@ const _nav = [
   },
   {
     component: CNavGroup,
+    name: 'CreateSubCategory',
+    to: '/base',
+    icon: <CIcon icon={cilPuzzle} customClassName="nav-icon" />,
+    items: [
+      // {
+      //   component: CNavItem,
+      //   name: 'Accordion',
+      //   to: '/base/accordion',
+      // },
+      {
+        component: CNavItem,
+        name: 'CreateSubCategory',
+        to: '/base/CreateSubCategory',
+      },
+      {
+        component: CNavItem,
+        name: 'View Category List',
+        to: '/base/ViewSubCategory  ',
+      },
+   
+    
+    
+    ],
+  },
+  {
+    component: CNavGroup,
     name: 'product',
     to: '/base',
     icon: <CIcon icon={cilPuzzle} customClassName="nav-icon" />,

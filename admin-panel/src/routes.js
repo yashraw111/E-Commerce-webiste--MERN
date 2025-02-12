@@ -9,19 +9,20 @@ const Typography = React.lazy(() => import('./views/theme/typography/Typography'
 // Base
 const Accordion = React.lazy(() => import('./views/base/accordion/Accordion'))
 
+const CreateProduct = React.lazy(() => import('./components/Crud/Product/CreateProduct.js'))
+const ViewProductList = React.lazy(() => import('./components/Crud/Product/ViewProductList'))
+const UpdateProject = React.lazy(() => import('./components/Crud/Product/UpdateProject.js'))
+const AddCategory = React.lazy(() => import('./components/Crud/Category/AddCategory'))
+const ViewCategory = React.lazy(() => import('./components/Crud/Category/ViewCategory'))
+const UpdateCategory = React.lazy(() => import('./components/Crud/Category/UpdateCategory.js'))
 
-
-const CreateProduct=React.lazy(()=>import('./components/Crud/Product/CreateProduct.js'))
-const ViewProductList=React.lazy(()=>import('./components/Crud/Product/ViewProductList'))
-const UpdateProject=React.lazy(()=>import('./components/Crud/Product/UpdateProject.js'))
-const AddCategory=React.lazy(()=>import('./components/Crud/Category/AddCategory'))
-const ViewCategory=React.lazy(()=>import('./components/Crud/Category/ViewCategory'))
-const UpdateCategory= React.lazy(()=>import('./components/Crud/Category/UpdateCategory.js'))
-
-
-
-
-
+const CreateSubCategory = React.lazy(
+  () => import('./components/Crud/SubCategory/CreateSubCategory.js'),
+)
+const ViewSubCategory = React.lazy(() => import('./components/Crud/SubCategory/ViewSubCategory.js'))
+const UpdateSubCategory = React.lazy(
+  () => import('./components/Crud/SubCategory/UpdateSubCategory.js'),
+)
 
 const Breadcrumbs = React.lazy(() => import('./views/base/breadcrumbs/Breadcrumbs'))
 const Cards = React.lazy(() => import('./views/base/cards/Cards'))
@@ -70,25 +71,27 @@ const Widgets = React.lazy(() => import('./views/widgets/Widgets'))
 const routes = [
   { path: '/', exact: true, name: 'Home' },
 
+  { path: '/base/create', exact: true, name: 'CreateProject', element: CreateProduct },
+  { path: '/base/ViewList', exact: true, name: 'CreateProject', element: ViewProductList },
+  { path: '/UpdateProduct/:id', exact: true, name: 'UpdateProject', element: UpdateProject },
+  { path: '/UpdateCategory/:id', exact: true, name: 'UpdateCategory', element: UpdateCategory },
 
+  { path: '/base/category', exact: true, name: 'AddCategory', element: AddCategory },
+  { path: '/base/viewCategory', exact: true, name: 'viewCategory', element: ViewCategory },
 
-
-
-  {path:'/base/create',exact:true,name:'CreateProject',element:CreateProduct},
-  {path:'/base/ViewList',exact:true,name:'CreateProject',element:ViewProductList},
-  {path:'/UpdateProduct/:id',exact:true,name:'UpdateProject',element:UpdateProject},
-  {path:'/UpdateCategory/:id',exact:true,name:'UpdateCategory',element:UpdateCategory},
-
-
-
-
-
-
-
-
-
-  {path:'/base/category',exact:true,name:'AddCategory',element:AddCategory},
-  {path:'/base/viewCategory',exact:true,name:'viewCategory',element:ViewCategory},
+  { path: '/base/ViewSubCategory', exact: true, name: 'ViewSubCategory', element: ViewSubCategory },
+  {
+    path: '/base/CreateSubCategory',
+    exact: true,
+    name: 'CreateSubCategory',
+    element: CreateSubCategory,
+  },
+  {
+    path: '/UpdateSubCategory/:id',
+    exact: true,
+    name: 'UpdateSubCategory',
+    element: UpdateSubCategory,
+  },
 
   { path: '/dashboard', name: 'Dashboard', element: Dashboard },
   { path: '/theme', name: 'Theme', element: Colors, exact: true },
