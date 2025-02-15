@@ -7,11 +7,12 @@ import { NavLink, useNavigate } from 'react-router-dom'
 import Swal from 'sweetalert2'
 
 const ViewCategory = () => {
-  const { CateList } = useSelector((state) => state.Category)
+   const { SubCateList } = useSelector((state) => state.SubCategory)
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(ViewSubCateList())
   }, [])
+  // console.log(CateList)
   const redirect = useNavigate()
 
   async function trash(id) {
@@ -47,8 +48,8 @@ const ViewCategory = () => {
           <CTableDataCell scope="col">Action</CTableDataCell>
         </CTableRow>
         <CTableBody>
-          {CateList.length > 0 ? (
-            CateList.map((ele, index) => {
+          {SubCateList.length > 0 ? (
+            SubCateList.map((ele, index) => {
               return (
                 <>
                   <CTableRow className="">

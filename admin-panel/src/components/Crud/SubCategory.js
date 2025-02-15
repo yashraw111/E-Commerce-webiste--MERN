@@ -16,7 +16,7 @@ export const CreateCate = createAsyncThunk('Category/CreateCate', async (data) =
   return data
 })
 
-export const ViewSubCateList = createAsyncThunk('Category/ViewCateList', async () => {
+export const ViewSubCateList = createAsyncThunk('Category/ViewSubCateList', async () => {
   const res = await axios.get(`${import.meta.env.VITE_BASE_URL_SUB_CAT}/`)
   // console.log(res)
 
@@ -31,9 +31,7 @@ export const DeleteCate = createAsyncThunk('Category/DeleteCate', async (id) => 
 export const UpdateCate = createAsyncThunk('Category/UpdateCate', async (data) => {
   // const { _id } = data
   console.log(data)
-  // const res = await axios.put(`${import.meta.env.VITE_BASE_URL_SUB_CAT}/updateCat/${id}`, data)
-  // console.log(res);
-  // return data
+ 
 })
 const CategorySlice = createSlice({
   name: 'category',
@@ -42,28 +40,28 @@ const CategorySlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(CreateCate.fulfilled, (state, action) => {
-        state.CateList.push(action.payload)
-        console.log(state.CateList)
+        state.SubCateList.push(action.payload)
+       
       })
       .addCase(ViewSubCateList.fulfilled, (state, action) => {
-        state.CateList = action.payload
+        state.SubCateList = action.payload
         // console.log( "sbjs",state.CateList)
       })
       .addCase(DeleteCate.fulfilled, (state, action) => {
         const id = action.payload
-        const filterData = state.CateList.filter((ele) => {
+        const filterData = state.SubCateList.filter((ele) => {
           return ele._id != id
         })
-        state.CateList = filterData
+        state.SubCateList = filterData
       })
       .addCase(UpdateCate.fulfilled, (state, action) => {
-        // const { id } = action.payload
-        // const Index_num = state.CateList.findIndex((ele) => {
-        //   return ele._id == id
-        // })
-        // if (Index_num != -1) {
-        //   state.CateList[Index_num] = action.payload
-        // }
+        const { id } = action.payload
+        const Index_num = state.SubCateList.findIndex((ele) => {
+          return ele._id == id
+        })
+        if (Index_num != -1) {
+          state.SubCateList[Index_num] = action.payload
+        }
       })
   },
 })

@@ -20,7 +20,7 @@ exports.createUser = async (req, res) => {
 };
 
 exports.login = async (req, res) => {
-  console.log(req.body);
+  // console.log(req.body);
   const { email, password } = req.body;
   const existEmail = await User.findOne({ email }).countDocuments().exec();
   if (existEmail > 0) {
@@ -28,7 +28,7 @@ exports.login = async (req, res) => {
     const pass_match = await hashToPlain(password, User.password);
     if (pass_match) {
       res.redirect("/home");
-    } else {
+    } else {x
       console.log();
       res.status(400).json({ message: "Invalid Password" });
     }

@@ -7,7 +7,6 @@ const LoginPage = () => {
   const {register,handleSubmit,formState:{errors},reset} = useForm()
   const redirect = useNavigate()
   async  function regist(data){
-    console.log(data)
     try {
         await axios.post(`${import.meta.env.VITE_BASE_URL_USER}/login`, data)
         .then((res)=>{
@@ -16,7 +15,6 @@ const LoginPage = () => {
         .catch((err)=>{
           console.log(err)
         })
-        // console.log(res)
         redirect("/home")
     } catch (error) {
         console.log(error)

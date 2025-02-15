@@ -1,4 +1,4 @@
-const { default: mongoose } = require("mongoose");
+const { default: mongoose, Schema } = require("mongoose");
 
  
 const common = {
@@ -8,7 +8,14 @@ const common = {
 }
 
 const ProductSchema = mongoose.Schema({
-    CateGory: common,
+    CateGory: {
+        type:Schema.Types.ObjectId,
+        ref:"Category"
+    },
+    sub_category: {
+        type:Schema.Types.ObjectId,
+        ref:'subCategory'
+    },
     productName: common,
     description: common,   
     productPrice: {

@@ -22,6 +22,7 @@ const AddCategory = () => {
   const dispatch = useDispatch()
 
 
+
   const {CateList}= useSelector((state)=>state.Category)
   useEffect(() => {
     dispatch(ViewCateList())
