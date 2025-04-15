@@ -18,39 +18,27 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Createpr } from '../UserSlice'
 import { ViewCateList } from '../CategorySlice'
 import { toast, ToastContainer } from 'react-toastify'
-import { ViewSubCateList } from '../SubCategory'
-
+  import { ViewSubCateList } from '../SubCategory'
 const CreateProduct = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
-    reset,
+    formState: {errors },
+    reset, 
   } = useForm({ mode: 'onTouched' }) // Validate on touch
   const dispatch = useDispatch()
-
   const [product, setProduct] = useState('')
   console.log("product...",product);
-
-  
-  
   const { CateList } = useSelector((state) => state.Category)
   const { SubCateList } = useSelector((state) => state.SubCategory)
+  console.log("sub",SubCateList)
 
   const filterCategory = SubCateList.filter((ele)=>{
   return ele.category._id == product
-  // console.log("ele",ele)
   })
-  console.log("filterData",filterCategory)
-
-  console.log('ViewCateList....................')
-  console.log('CateList', CateList)
-  console.log('Subcate', SubCateList)
-
   useEffect(() => {
     dispatch(ViewCateList())
     dispatch(ViewSubCateList())
-    // dispatch(resetState());
   }, [dispatch])
 
   const regist = async (data) => {
@@ -64,10 +52,10 @@ const CreateProduct = () => {
         'https://api.cloudinary.com/v1_1/dd8jcqy60/image/upload',
         formData,
       )
-
       const payload = {
-        productName: data.productName,
         CateGory: data.CateGory,
+        sub_category:data.sub_category,
+        productName: data.productName,
         WithoutDiscountPrice: data.WithoutDiscountPrice,
         productPrice: data.productPrice,
         productImage: cloudinaryResponse.data.secure_url,
@@ -115,7 +103,7 @@ const CreateProduct = () => {
                 </CFormSelect>
                 {errors.CateGory && <p className="text-danger">{errors.CateGory.message}</p>}
 
-                <CFormLabel className="fw-bold">Category</CFormLabel>
+                <CFormLabel className="fw-bold">Sub Category</CFormLabel>
                 <CFormSelect
                   className="mb-3"
                   {...register('sub_category', { required: 'Category is required' })}

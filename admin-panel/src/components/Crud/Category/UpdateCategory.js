@@ -14,7 +14,6 @@ import { useForm } from 'react-hook-form'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { ViewCateList, UpdateCate } from '../CategorySlice'
-
 const UpdateCategory = () => {
   const {
     register,
@@ -33,13 +32,11 @@ const UpdateCategory = () => {
     reset(SingleCate)
   }, [dispatch])
   const redirect = useNavigate()
-
   function UpdateCateg(Data) {
     dispatch(UpdateCate(Data))
     // redirect('/base/viewCategory')
     // reset()
   }
-
   return (
     <CRow>
       <CCol xs={12}>

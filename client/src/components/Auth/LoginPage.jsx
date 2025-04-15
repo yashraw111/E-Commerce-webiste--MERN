@@ -1,128 +1,151 @@
 import React from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import {useForm} from 'react-hook-form'
+import { useForm } from "react-hook-form";
+import { GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import { auth } from "./firebase";
+import { toast, ToastContainer } from "react-toastify";
+import { FcGoogle } from "react-icons/fc";
+import { FaFacebook } from "react-icons/fa";
 import axios from "axios";
+import { showToast } from "../../helpers/showToast";
+import { useDispatch } from 'react-redux'
+import { setUser } from "../slice/user.slice";
+
 const LoginPage = () => {
-
-  const {register,handleSubmit,formState:{errors},reset} = useForm()
-  const redirect = useNavigate()
-  async  function regist(data){
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm();
+  const navigate = useNavigate();
+  const dispatch =useDispatch()
+  async function login(data) {
     try {
-        await axios.post(`${import.meta.env.VITE_BASE_URL_USER}/login`, data)
-        .then((res)=>{
-          res.redirect('/home')
-        })
-        .catch((err)=>{
-          console.log(err)
-        })
-        redirect("/home")
+      const response = await axios.post(
+        `http://localhost:8000/api/auth/login`,
+        data
+      );
+  
+      if (response.status !== 200) {
+        return showToast("error", response.data.message);
+      }
+  
+      dispatch(setUser(response.data.user)); // NOTE: data.user → response.data.user
+      showToast("success", response.data.message);
+  
+      setTimeout(() => {
+        navigate("/");
+      }, 1500);
     } catch (error) {
-        console.log(error)
-
+      showToast("error", error.response?.data?.message || error.message);
     }
   }
+  
+  // function googleAuth() {
+  //   const provider = new GoogleAuthProvider();
+  //   signInWithPopup(auth, provider)
+  //     .then((res) => {
+  //       // const result =GoogleAuthProvider.credentialFromResult(res)
+  //       const user = res.user;
+  //       console.log(user);
+  //       toast.success("User login successfully", { position: "top-center" });
+  //       // console.log(result.accessToken);
+  //       window.location.href = "/";
+  //       //     console.log(res.user);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err.message);
+  //       console.log(err);
+  //       toast.error("Login failed", { position: "top-center" });
+  //     });
+  // }
+
+
+
 
   return (
-    <>
-      <section class="bg-gray-50 dark:bg-gray-900 h-full">
-        <div class="flex flex-col items-center justify-center px-6  mx-auto  h-screen  md:h-screen lg:py-0">
-      
-          <h1 class="text-xl mb-6 font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
-                Sign in to your account
-              </h1>
-          <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
-            <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
-            
-              <form class="space-y-4 md:space-y-6" action="#" onClick={handleSubmit(regist)}>
-                <div>
-                  <label
-                    for="email"
-                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                  >
-                    Your email
-                  </label>
-                  <input
-                    type="email"
-                    name="email"
-                    id="email"
-                    {...register("email")}
-                    class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="name@company.com"
-                    required=""
-                  />
-                </div>
-                <div>
-                  <label
-                    for="password"
-                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                  >
-                    Password
-                  </label>
-                  <input
-                    type="password"
-                    name="password"
-                    id="password"
-                    {...register("password")}
-                    placeholder="••••••••"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    required=""
-                  />
-                </div>
-                <div class="flex items-center justify-between">
-                  <div class="flex items-start">
-                    <div class="flex items-center h-5">
-                      <input
-                        id="remember"
-                        aria-describedby="remember"
-                        type="checkbox"
-                        class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800"
-                        required=""
-                      />
-                    </div>
-                    <div class="ml-3 text-sm">
-                      <label
-                        for="remember"
-                        class="text-gray-500 dark:text-gray-300"
-                      >
-                        Remember me
-                      </label>
-                    </div>
-                  </div>
-                  <NavLink to="/forgotPass">
-
-
-                  <a
-                    href="#"
-                    class="text-sm font-medium text-blue-600 hover:underline dark:text-blue-500"
-                    >
-                    Forgot password?
-                  </a>
-                    </NavLink>
-                </div>
-                <button
-                  // type="submit"
-                  class="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4  focus:ring-blue-900 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                >
-                  Sign in
-                </button>
-                
-                <p class="text-sm font-light text-gray-500 dark:text-gray-400">
-                  Don’t have an account yet?{" "}
-                  <NavLink to="/signup">
-                  <a
-                    href="#"
-                    class="font-medium text-blue-600 hover:underline dark:text-blue-500"
-                  >
-                    Sign up
-                  </a>
-                  </NavLink>
-                </p>
-              </form>
-            </div>
+    <div className="flex items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900">
+      <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-md dark:bg-gray-800">
+        <h2 className="text-2xl font-bold text-center text-gray-900 dark:text-white">
+          Sign in to your account
+        </h2>
+        <form className="space-y-4" onSubmit={handleSubmit(login)}>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+              Email Address
+            </label>
+            <input
+              type="email"
+              {...register("email", { required: "Email is required" })}
+              className="w-full px-4 py-2 mt-1 border rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 text-white"
+              placeholder="name@company.com"
+            />
+            {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>}
           </div>
-        </div>
-      </section>
-    </>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+              Password
+            </label>
+            <input
+              type="password"
+              {...register("password", { required: "Password is required" })}
+              className="w-full px-4 py-2 mt-1 border rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 text-white"
+              placeholder="••••••••"
+            />
+            {errors.password && <p className="text-red-500 text-xs mt-1">{errors.password.message}</p>}
+          </div>
+
+          <div className="flex items-center justify-between">
+            <label className="flex items-center">
+              <input type="checkbox" className="w-4 h-4" />
+              <span className="ml-2 text-sm text-gray-700 dark:text-gray-300">Remember me</span>
+            </label>
+            <NavLink to="/forgotPass" className="text-sm text-blue-600 dark:text-blue-400 hover:underline">
+              Forgot password?
+            </NavLink>
+          </div>
+
+          <button
+            type="submit"
+            className="w-full px-4 py-2 font-bold text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-800"
+          >
+            Sign in
+          </button>
+
+          <div className="relative flex items-center my-4">
+            <div className="flex-1 border-t border-gray-300 dark:border-gray-600"></div>
+            <p className="px-3 text-sm text-gray-500 dark:text-gray-400">OR</p>
+            <div className="flex-1 border-t border-gray-300 dark:border-gray-600"></div>
+          </div>
+
+          {/* <button onClick={googleAuth}
+            className="w-full flex items-center justify-center px-4 py-2 border rounded-lg text-gray-700 bg-white hover:bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:text-white transition"
+          >
+            <FcGoogle className="text-2xl mr-2" />
+            Continue with Google
+          </button>
+
+          <button
+          // onClick={facebookAuth}
+          onClick={googleAuth}
+            className="w-full flex items-center justify-center px-4 py-2 mt-2 border rounded-lg text-white bg-blue-600 hover:bg-blue-700 transition"
+          >
+            <FaFacebook className="text-2xl mr-2" />
+            Continue with Facebook
+          </button> */}
+
+          <p className="text-sm text-center text-gray-600 dark:text-gray-300">
+            Don’t have an account yet?{" "}
+            <NavLink to="/signup" className="text-blue-600 dark:text-blue-400 hover:underline">
+              Sign up
+            </NavLink>
+          </p>
+        </form>
+      </div>
+      <ToastContainer />
+    </div>
   );
 };
 

@@ -1,61 +1,139 @@
-import React from 'react'
-import { useForm } from 'react-hook-form'
-import { NavLink } from 'react-router-dom'
-import axios from 'axios'
+import React from "react";
+import { useForm } from "react-hook-form";
+import { NavLink, useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
+import { auth } from "./firebase";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import axios from "axios";
+import { getEvn } from "../../helpers/getEnv";
+import { showToast } from "../../helpers/showToast";
 const SignUpPage = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm();
+  const navigate = useNavigate()
 
-      const {register,handleSubmit,formState:{errors},reset} = useForm()
-    async  function regist(data){
-        console.log(data)
-        try {
-            const res = await axios.post(`${import.meta.env.VITE_BASE_URL_USER}/SignUp`, data)
-        } catch (error) {
-            console.log(error)
-        }
+  async function signup(data) {
+    try {
+      const response = await axios.post(
+        `http://localhost:8000/api/auth/register`,
+        data
+      );
+      console.log(response)
+      if (response.status !== 200) {
+        return showToast("error", response.data.message);
       }
-
-
+      showToast("success", response.data.message);
+      navigate("/login")
+    } catch (error) {
+      showToast("error", error.response?.data?.message || error.message);
+    }
+  }
   return (
-    <section class="bg-gray-50 dark:bg-gray-900" h-full>
-    <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto h-screen   lg:py-0">
-    
-        <h1 class="text-xl font-bold leading-tight tracking-tight mb-4 text-gray-900 md:text-2xl dark:text-white">
-                    Create an account
-                </h1>
-        <div class="w-[80%]  bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
-            <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
-                
-                <form class="space-y-4 md:space-y-6"   action="#" onClick={handleSubmit(regist)}>
-                    <div>
-                        <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
-                        <input type="email" {...register("email")} name="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@company.com" required=""/>
-                    </div>
-                    <div>
-                        <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
-                        <input type="password" {...register("password")} name="password" id="password" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required=""/>
-                    </div>
-                    <div>
-                        <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Confirm password</label>
-                        <input type="password" {...register("confirmPass")} name="confirmPass" id="confirmPass" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required=""/>
-                    </div>
-                    <div class="flex ">
-                        <div class="flex items-center h-5">
-                          <input id="terms" aria-describedby="terms" type="checkbox" class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800" required=""/>
-                        </div>
-                        <div class="flex ml-3 text-sm">
-                          <label for="terms" class="font-light text-gray-500 dark:text-gray-300 flex">I accept the <a class="font-medium text-blue-700 hover:underline dark:text-primary-500" href="#">Terms and Conditions</a></label>
-                        </div>
-                    </div>
-                    <button  class="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Create an account</button>
-                    <NavLink to='/'><p class="text-sm ms-2 flex font-light text-gray-500 dark:text-gray-400">
-                        Already have an account? <a href="#" class="ms-2 font-medium text-primary-600 hover:underline dark:text-blue-800">Login here</a>
-                    </p></NavLink>
-                </form>
-            </div>
-        </div>
-    </div>
-  </section>
-  )
-}
+    <section className="bg-gray-100 signup dark:bg-gray-900 min-h-screen flex items-center justify-center px-4 ">
+      <div className="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-6 w-full max-w-md">
+        <h1 className="text-2xl font-bold text-gray-900 dark:text-white text-center">
+          Create an Account
+        </h1>
+        <form className="space-y-4 mt-6" onSubmit={handleSubmit(signup)}>
+          <div>
+            <label className="block text-gray-700 dark:text-gray-300 text-sm font-medium">
+              Your Name
+            </label>
+            <input
+              type="name"
+              {...register("name", { required: "name is required" })}
+              className="w-full p-2.5 mt-1 rounded-lg border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 text-white text-white"
+              placeholder="name1..."
+            />
+            {errors.email && (
+              <p className="text-red-500 text-sm">{errors.email.message}</p>
+            )}
+          </div>
+          <div>
+            <label className="block text-gray-700 dark:text-gray-300 text-sm font-medium">
+              Your Email
+            </label>
+            <input
+              type="email"
+              {...register("email", { required: "Email is required" })}
+              className="w-full p-2.5 mt-1 rounded-lg border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 text-white text-white"
+              placeholder="name@company.com"
+            />
+            {errors.email && (
+              <p className="text-red-500 text-sm">{errors.email.message}</p>
+            )}
+          </div>
 
-export default SignUpPage
+          <div>
+            <label className="block text-gray-700 dark:text-gray-300 text-sm font-medium">
+              Password
+            </label>
+            <input
+              type="password"
+              {...register("password", { required: "Password is required" })}
+              className="w-full p-2.5 mt-1 rounded-lg border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 text-white"
+              placeholder="••••••••"
+            />
+            {errors.password && (
+              <p className="text-red-500 text-sm">{errors.password.message}</p>
+            )}
+          </div>
+
+          <div>
+            <label className="block text-gray-700 dark:text-gray-300 text-sm font-medium">
+              Confirm Password
+            </label>
+            <input
+              type="password"
+              {...register("confirmPass", {
+                required: "Please confirm your password",
+              })}
+              className="w-full p-2.5 mt-1 rounded-lg border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 text-white"
+              placeholder="••••••••"
+            />
+            {errors.confirmPass && (
+              <p className="text-red-500 text-sm">
+                {errors.confirmPass.message}
+              </p>
+            )}
+          </div>
+          {/* 
+          <div className="flex items-center gap-2">
+            <input
+              type="checkbox"
+              id="terms"
+              className="h-4 w-4 rounded border-gray-300 focus:ring-blue-500"
+            />
+            <label htmlFor="terms" className="text-sm text-gray-600 dark:text-gray-400">
+              I accept the{" "}
+              <a href="#" className="text-blue-600 hover:underline">
+                Terms and Conditions
+              </a>
+            </label>
+          </div> */}
+
+          <button
+            type="submit"
+            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg px-5 py-2.5 transition-all duration-200"
+          >
+            Sign Up
+          </button>
+
+          <p className="text-center text-sm text-gray-600 dark:text-gray-400">
+            Already have an account?{" "}
+            <NavLink to="/signin" className="text-blue-600 hover:underline">
+              Login here
+            </NavLink>
+          </p>
+        </form>
+      </div>
+      <ToastContainer />
+    </section>
+  );
+};
+
+export default SignUpPage;

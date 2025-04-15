@@ -27,6 +27,7 @@ const AddCategory = () => {
     dispatch(ViewCateList())
   }, [dispatch]);
   async function AddCategory(data) {
+    
 
   
     try {

@@ -2,11 +2,12 @@ const ProductSchema = require('../model/product.model')
 
 // Create Product
 const createProduct = async (req, res) => {
-    console.log(req.body)
+    // console.log(req.body)
     try {
         const { 
             productName, 
             WithoutDiscountPrice, 
+            sub_category,
             CateGory, 
             productPrice, 
             productImage, 
@@ -21,6 +22,7 @@ const createProduct = async (req, res) => {
             productName, 
             WithoutDiscountPrice, 
             CateGory, 
+            sub_category,
             productPrice, 
             productImage, 
             rate, 
@@ -29,7 +31,6 @@ const createProduct = async (req, res) => {
             available, 
             discount 
         })
-
         console.log(newProduct)
         res.status(201).json({ message: 'Product created successfully', product: newProduct })
 
@@ -42,7 +43,7 @@ const createProduct = async (req, res) => {
  
 const viewProduct = async (req, res) => {
     try {
-        const products = await ProductSchema.find()
+        const products = await ProductSchema.find().populate("CateGory").populate("sub_category")
         res.status(200).json(products)
     } catch (error) {
         console.error(error)

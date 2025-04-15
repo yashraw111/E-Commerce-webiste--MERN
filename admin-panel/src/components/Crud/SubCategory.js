@@ -6,7 +6,6 @@ const initialState = {
 }
 
 export const CreateCate = createAsyncThunk('Category/CreateCate', async (data) => {
-  // console.log(data);
   const res = await axios.post(`${import.meta.env.VITE_BASE_URL_SUB_CAT}/`, data)
   // console.log(res)
   // const newCate = {

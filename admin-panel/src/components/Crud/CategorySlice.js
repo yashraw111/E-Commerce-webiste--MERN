@@ -6,9 +6,7 @@ const initialState = {
 }
 
 export const CreateCate = createAsyncThunk('Category/CreateCate', async (data) => {
-  // console.log(data);
   const res = await axios.post(`${import.meta.env.VITE_BASE_URL_CAT}/addCategory`, data)
-  // console.log(res)
   // const newCate = {
   //   id: res.data.id,
   //   ...data,
@@ -30,9 +28,7 @@ export const DeleteCate = createAsyncThunk('Category/DeleteCate', async (id) => 
 
 export const UpdateCate = createAsyncThunk('Category/UpdateCate', async (data) => {
   // const { _id } = data
-  console.log(data)
   // const res = await axios.put(`${import.meta.env.VITE_BASE_URL_CAT}/updateCat/${id}`, data)
-  // console.log(res);
   // return data
 })
 const CategorySlice = createSlice({
@@ -47,7 +43,6 @@ const CategorySlice = createSlice({
       })
       .addCase(ViewCateList.fulfilled, (state, action) => {
         state.CateList = action.payload
-        // console.log( "sbjs",state.CateList)
       })
       .addCase(DeleteCate.fulfilled, (state, action) => {
         const id = action.payload

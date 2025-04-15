@@ -34,7 +34,7 @@ const UpdateSubCategory = () => {
   console.log(SubCateList)
   console.log('subCat', CateList)
   const singleSubCat = CateList.map((ele) => {
-    // return
+    
   })
   useEffect(() => {
     dispatch(ViewCateList())

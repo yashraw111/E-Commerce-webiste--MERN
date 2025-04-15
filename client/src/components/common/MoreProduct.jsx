@@ -18,6 +18,7 @@ const MoreProduct = () => {
   }, []);
 
   const singleProduct = product.find((ele) => ele._id === id);
+
   return (
     <>
       <Header />
@@ -35,7 +36,7 @@ const MoreProduct = () => {
 
               <div class="showcase-content">
                 <div className="showcase-rating">
-                  {/* {Array(singleProduct?.rate)
+                  {Array(singleProduct?.rate)
                     .fill(0)
                     .map((_, i) => (
                       <ion-icon key={i} name="star"></ion-icon>
@@ -47,7 +48,7 @@ const MoreProduct = () => {
                         key={i + singleProduct?.rate}
                         name="star-outline"
                       ></ion-icon>
-                    ))} */}
+                    ))}
                         <ion-icon name="star"></ion-icon>
                         <ion-icon name="star"></ion-icon>
                         <ion-icon name="star"></ion-icon>
@@ -94,7 +95,6 @@ const MoreProduct = () => {
                       <p class="display-number">24</p>
                       <p class="display-text">Hours</p>
                     </div>
-
                     <div class="countdown-content">
                       <p class="display-number">59</p>
                       <p class="display-text">Min</p>
@@ -111,6 +111,7 @@ const MoreProduct = () => {
           </div>
         </div>
       </div>
+      <h1>skks</h1>
       <RelatedProduct />
       <Footer />
     </>
